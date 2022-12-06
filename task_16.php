@@ -1,3 +1,21 @@
+<?
+session_start();
+
+if (!$_SESSION['user']){
+    header("Location: /task_15.php");
+}
+
+if(isset($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+
+if ($_GET['user'] == 'exit'){
+    unset($_SESSION['user']);
+    header("Location: /task_15.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,9 +53,9 @@
                             <div class="panel-content">
                                 <div class="form-group">
                                     <div class="alert alert-success fade show" role="alert">
-                                        Здравствуйте, ИМЯ_ПОЛЬЗОВАТЕЛЯ.
+                                        Здравствуйте, <?=$_SESSION['user']['email']?>.
                                     </div>
-                                    <a href="#" class="btn btn-info">Выйти</a>
+                                    <a href="?user=exit" class="btn btn-info">Выйти</a>
                                 </div>
                             </div>
                         </div>

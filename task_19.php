@@ -1,3 +1,12 @@
+<?
+session_start();
+
+if(isset($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +46,14 @@
                             <div class="panel-content">
                                 <div class="panel-content">
                                     <div class="form-group">
-                                        <form action="">
+                                        <?=(!is_null($message) ? '<div class="alert alert-'.$message['status'].'">«'.$message['mess'].'»</div>' : '')?>
+
+                                        <form action="handler.php" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="form" value="task19">
+
                                             <div class="form-group">
                                                 <label class="form-label" for="simpleinput">Image</label>
-                                            <input type="file" id="simpleinput" class="form-control">
+                                                <input type="file" name="img[]" id="simpleinput" class="form-control" multiple>
                                             </div>
                                             <button class="btn btn-success mt-3">Submit</button>
                                         </form>
@@ -66,18 +79,18 @@
                             <div class="panel-content">
                                 <div class="panel-content image-gallery">
                                     <div class="row">
-                                        <div class="col-md-3 image">
-                                            <img src="img/demo/gallery/1.jpg">
-                                            <a class="btn btn-danger" href="#" onclick="confirm('Вы уверены?');">Удалить</a>
-                                        </div>
-                                        <div class="col-md-3 image">
-                                            <img src="img/demo/gallery/2.jpg">
-                                            <a class="btn btn-danger" onclick="confirm('Вы уверены?');" href="#">Удалить</a>
-                                        </div>
-                                        <div class="col-md-3 image">
-                                            <img src="img/demo/gallery/3.jpg">
-                                            <a class="btn btn-danger" onclick="confirm('Вы уверены?');" href="#">Удалить</a>
-                                        </div>
+                                        <?
+
+                                        $pdo = new PDO('mysql:dbname=md0_lesson_10;host=localhost', 'root', 'root');
+                                        $images = $pdo->query('SELECT * FROM images ORDER BY id DESC');
+                                        $images = $images->fetchAll();
+
+                                        foreach ($images as $image):
+                                            ?>
+                                            <div class="col-md-3 image">
+                                                <img src="uploads/<?=$image['uID']?>">
+                                            </div>
+                                        <? endforeach;?>
                                     </div>
                                 </div>
                             </div>

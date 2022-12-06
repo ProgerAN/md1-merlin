@@ -1,3 +1,5 @@
+<? session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +21,6 @@
     </head>
     <body class="mod-bg-1 mod-nav-link ">
         <main id="js-page-content" role="main" class="page-content">
-
             <div class="col-md-6">
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
@@ -35,10 +36,11 @@
                         <div class="panel-content">
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <div class="alert alert-info">Ваше сообщение выводится тут</div>
-                                    <form action="">
-                                        <label class="form-label" for="simpleinput">Text</label>
-                                        <input type="text" id="simpleinput" class="form-control">
+                                    <div class="alert alert-info fade show" role="alert">
+                                        Кнопка была нажата: <b><?=$_SESSION['button_counter'] ?? '0'?></b> раз
+                                    </div>
+                                    <form action="handler.php" method="post">
+                                        <input type="hidden" name="form" value="task14">
                                         <button class="btn btn-success mt-3">Submit</button>
                                     </form>
                                 </div>

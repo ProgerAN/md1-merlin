@@ -1,3 +1,16 @@
+<?
+session_start();
+
+if ($_SESSION['user']){
+    header("Location: /task_16.php");
+}
+
+if(isset($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,17 +47,20 @@
                         <div class="panel-content">
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <div class="alert alert-danger fade show" role="alert">
-                                        Неверный логин или пароль
-                                    </div>
-                                    <form action="">
+
+                                    <?=(!is_null($message) ? '<div class="alert alert-'.$message['status'].'">«'.$message['mess'].'»</div>' : '')?>
+
+                                    <form action="handler.php" method="post">
+                                        <input type="hidden" name="form" value="task15">
+
                                         <div class="form-group">
-                                        	<label class="form-label" for="simpleinput">Email</label>
-                                        <input type="text" id="simpleinput" class="form-control">
+                                        	<label class="form-label" for="simpleinput">Email (exp@mail.com)</label>
+                                            <input type="email" name="email" id="simpleinput" class="form-control">
                                         </div>
 
-                                        <label class="form-label" for="simpleinput">Password</label>
-                                        <input type="password" id="simpleinput" class="form-control">
+                                        <label class="form-label" for="simpleinput">Password (admin)</label>
+                                        <input type="password" name="passwd" id="simpleinput" class="form-control">
+
                                         <button class="btn btn-success mt-3">Submit</button>
                                     </form>
                                 </div>
