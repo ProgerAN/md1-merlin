@@ -23,6 +23,10 @@ if ($_POST['txt']) {
 
 }
 
+$arr = [
+  123
+];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
